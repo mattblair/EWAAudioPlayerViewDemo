@@ -9,6 +9,17 @@
 /* Begin PBXBuildFile section */
 		C94921261893188900A0DBD9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C94921251893188900A0DBD9 /* AVFoundation.framework */; };
 		C967AAB61893285500DD0B50 /* DemoConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = C967AAB51893285500DD0B50 /* DemoConstants.m */; };
+		C967AAC318932A4C00DD0B50 /* jd-duniway.caf in Resources */ = {isa = PBXBuildFile; fileRef = C967AAB818932A4C00DD0B50 /* jd-duniway.caf */; };
+		C967AAC418932A4C00DD0B50 /* kbb-audio-thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = C967AAB918932A4C00DD0B50 /* kbb-audio-thumb.png */; };
+		C967AAC518932A4C00DD0B50 /* kbb-audio-thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C967AABA18932A4C00DD0B50 /* kbb-audio-thumb@2x.png */; };
+		C967AAC618932A4C00DD0B50 /* kbb-pause.png in Resources */ = {isa = PBXBuildFile; fileRef = C967AABB18932A4C00DD0B50 /* kbb-pause.png */; };
+		C967AAC718932A4C00DD0B50 /* kbb-pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C967AABC18932A4C00DD0B50 /* kbb-pause@2x.png */; };
+		C967AAC818932A4C00DD0B50 /* kbb-play.png in Resources */ = {isa = PBXBuildFile; fileRef = C967AABD18932A4C00DD0B50 /* kbb-play.png */; };
+		C967AAC918932A4C00DD0B50 /* kbb-play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C967AABE18932A4C00DD0B50 /* kbb-play@2x.png */; };
+		C967AACA18932A4C00DD0B50 /* kbb-slider-2-empty.png in Resources */ = {isa = PBXBuildFile; fileRef = C967AABF18932A4C00DD0B50 /* kbb-slider-2-empty.png */; };
+		C967AACB18932A4C00DD0B50 /* kbb-slider-2-empty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C967AAC018932A4C00DD0B50 /* kbb-slider-2-empty@2x.png */; };
+		C967AACC18932A4C00DD0B50 /* kbb-slider-2-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = C967AAC118932A4C00DD0B50 /* kbb-slider-2-filled.png */; };
+		C967AACD18932A4C00DD0B50 /* kbb-slider-2-filled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C967AAC218932A4C00DD0B50 /* kbb-slider-2-filled@2x.png */; };
 		C9E6917F1893017800CC9DF2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9E6917E1893017800CC9DF2 /* Foundation.framework */; };
 		C9E691811893017800CC9DF2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9E691801893017800CC9DF2 /* CoreGraphics.framework */; };
 		C9E691831893017800CC9DF2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9E691821893017800CC9DF2 /* UIKit.framework */; };
@@ -39,6 +50,17 @@
 		C94921251893188900A0DBD9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C967AAB41893285500DD0B50 /* DemoConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoConstants.h; sourceTree = "<group>"; };
 		C967AAB51893285500DD0B50 /* DemoConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoConstants.m; sourceTree = "<group>"; };
+		C967AAB818932A4C00DD0B50 /* jd-duniway.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "jd-duniway.caf"; path = "resources/jd-duniway.caf"; sourceTree = "<group>"; };
+		C967AAB918932A4C00DD0B50 /* kbb-audio-thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "kbb-audio-thumb.png"; path = "resources/kbb-audio-thumb.png"; sourceTree = "<group>"; };
+		C967AABA18932A4C00DD0B50 /* kbb-audio-thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "kbb-audio-thumb@2x.png"; path = "resources/kbb-audio-thumb@2x.png"; sourceTree = "<group>"; };
+		C967AABB18932A4C00DD0B50 /* kbb-pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "kbb-pause.png"; path = "resources/kbb-pause.png"; sourceTree = "<group>"; };
+		C967AABC18932A4C00DD0B50 /* kbb-pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "kbb-pause@2x.png"; path = "resources/kbb-pause@2x.png"; sourceTree = "<group>"; };
+		C967AABD18932A4C00DD0B50 /* kbb-play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "kbb-play.png"; path = "resources/kbb-play.png"; sourceTree = "<group>"; };
+		C967AABE18932A4C00DD0B50 /* kbb-play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "kbb-play@2x.png"; path = "resources/kbb-play@2x.png"; sourceTree = "<group>"; };
+		C967AABF18932A4C00DD0B50 /* kbb-slider-2-empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "kbb-slider-2-empty.png"; path = "resources/kbb-slider-2-empty.png"; sourceTree = "<group>"; };
+		C967AAC018932A4C00DD0B50 /* kbb-slider-2-empty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "kbb-slider-2-empty@2x.png"; path = "resources/kbb-slider-2-empty@2x.png"; sourceTree = "<group>"; };
+		C967AAC118932A4C00DD0B50 /* kbb-slider-2-filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "kbb-slider-2-filled.png"; path = "resources/kbb-slider-2-filled.png"; sourceTree = "<group>"; };
+		C967AAC218932A4C00DD0B50 /* kbb-slider-2-filled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "kbb-slider-2-filled@2x.png"; path = "resources/kbb-slider-2-filled@2x.png"; sourceTree = "<group>"; };
 		C9E6917B1893017800CC9DF2 /* EWAAudioPlayerViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EWAAudioPlayerViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9E6917E1893017800CC9DF2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C9E691801893017800CC9DF2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -86,11 +108,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C967AAB7189328D600DD0B50 /* Media */ = {
+		C967AAB7189328D600DD0B50 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C967AAB818932A4C00DD0B50 /* jd-duniway.caf */,
+				C967AAB918932A4C00DD0B50 /* kbb-audio-thumb.png */,
+				C967AABA18932A4C00DD0B50 /* kbb-audio-thumb@2x.png */,
+				C967AABB18932A4C00DD0B50 /* kbb-pause.png */,
+				C967AABC18932A4C00DD0B50 /* kbb-pause@2x.png */,
+				C967AABD18932A4C00DD0B50 /* kbb-play.png */,
+				C967AABE18932A4C00DD0B50 /* kbb-play@2x.png */,
+				C967AABF18932A4C00DD0B50 /* kbb-slider-2-empty.png */,
+				C967AAC018932A4C00DD0B50 /* kbb-slider-2-empty@2x.png */,
+				C967AAC118932A4C00DD0B50 /* kbb-slider-2-filled.png */,
+				C967AAC218932A4C00DD0B50 /* kbb-slider-2-filled@2x.png */,
 			);
-			name = Media;
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		C9E691721893017800CC9DF2 = {
@@ -133,7 +166,7 @@
 				C9E691941893017800CC9DF2 /* DemoViewController.m */,
 				C967AAB41893285500DD0B50 /* DemoConstants.h */,
 				C967AAB51893285500DD0B50 /* DemoConstants.m */,
-				C967AAB7189328D600DD0B50 /* Media */,
+				C967AAB7189328D600DD0B50 /* Resources */,
 				C9E691B318930DDF00CC9DF2 /* EWAAudioPlayerView */,
 				C9E691961893017800CC9DF2 /* Images.xcassets */,
 				C9E691851893017800CC9DF2 /* Supporting Files */,
@@ -256,8 +289,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C967AAC618932A4C00DD0B50 /* kbb-pause.png in Resources */,
+				C967AAC818932A4C00DD0B50 /* kbb-play.png in Resources */,
+				C967AAC318932A4C00DD0B50 /* jd-duniway.caf in Resources */,
+				C967AACD18932A4C00DD0B50 /* kbb-slider-2-filled@2x.png in Resources */,
+				C967AAC418932A4C00DD0B50 /* kbb-audio-thumb.png in Resources */,
+				C967AAC518932A4C00DD0B50 /* kbb-audio-thumb@2x.png in Resources */,
+				C967AACC18932A4C00DD0B50 /* kbb-slider-2-filled.png in Resources */,
+				C967AAC718932A4C00DD0B50 /* kbb-pause@2x.png in Resources */,
+				C967AAC918932A4C00DD0B50 /* kbb-play@2x.png in Resources */,
+				C967AACA18932A4C00DD0B50 /* kbb-slider-2-empty.png in Resources */,
 				C9E691971893017800CC9DF2 /* Images.xcassets in Resources */,
 				C9E691891893017800CC9DF2 /* InfoPlist.strings in Resources */,
+				C967AACB18932A4C00DD0B50 /* kbb-slider-2-empty@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
