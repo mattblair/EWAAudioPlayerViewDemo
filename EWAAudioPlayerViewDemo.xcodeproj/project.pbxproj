@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C94921261893188900A0DBD9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C94921251893188900A0DBD9 /* AVFoundation.framework */; };
 		C9E6917F1893017800CC9DF2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9E6917E1893017800CC9DF2 /* Foundation.framework */; };
 		C9E691811893017800CC9DF2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9E691801893017800CC9DF2 /* CoreGraphics.framework */; };
 		C9E691831893017800CC9DF2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9E691821893017800CC9DF2 /* UIKit.framework */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C94921251893188900A0DBD9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C9E6917B1893017800CC9DF2 /* EWAAudioPlayerViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EWAAudioPlayerViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9E6917E1893017800CC9DF2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C9E691801893017800CC9DF2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -63,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C94921261893188900A0DBD9 /* AVFoundation.framework in Frameworks */,
 				C9E691811893017800CC9DF2 /* CoreGraphics.framework in Frameworks */,
 				C9E691831893017800CC9DF2 /* UIKit.framework in Frameworks */,
 				C9E6917F1893017800CC9DF2 /* Foundation.framework in Frameworks */,
@@ -104,6 +107,7 @@
 		C9E6917D1893017800CC9DF2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C94921251893188900A0DBD9 /* AVFoundation.framework */,
 				C9E6917E1893017800CC9DF2 /* Foundation.framework */,
 				C9E691801893017800CC9DF2 /* CoreGraphics.framework */,
 				C9E691821893017800CC9DF2 /* UIKit.framework */,
@@ -349,7 +353,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -382,7 +386,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
