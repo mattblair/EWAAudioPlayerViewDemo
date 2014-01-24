@@ -8,6 +8,9 @@
 
 #import "DemoConstants.h"
 
+// Audio file
+NSString* const kDemoAudioFile = @"jd-duniway";
+
 // Audio Player Images
 NSString* const kPlayButtonImage = @"kbb-play";
 NSString* const kPauseButtonImage = @"kbb-pause";

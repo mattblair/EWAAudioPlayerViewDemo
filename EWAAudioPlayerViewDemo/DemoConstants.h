@@ -6,7 +6,10 @@
 //  Copyright (c) 2014 Elsewise. All rights reserved.
 //
 
-// Audio Player Images
+// Audio file
+extern NSString* const kDemoAudioFile;
+
+// Player graphics
 extern NSString* const kPlayButtonImage;
 extern NSString* const kPauseButtonImage;
 extern NSString* const kThumbButtonImage; // UISlider
