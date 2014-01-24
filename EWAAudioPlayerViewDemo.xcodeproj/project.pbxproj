@@ -21,6 +21,7 @@
 		C9E691A01893017800CC9DF2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9E691821893017800CC9DF2 /* UIKit.framework */; };
 		C9E691A81893017900CC9DF2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9E691A61893017800CC9DF2 /* InfoPlist.strings */; };
 		C9E691AA1893017900CC9DF2 /* EWAAudioPlayerViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E691A91893017900CC9DF2 /* EWAAudioPlayerViewDemoTests.m */; };
+		C9E691B618930DDF00CC9DF2 /* EWAAudioPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E691B518930DDF00CC9DF2 /* EWAAudioPlayerView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,8 @@
 		C9E691A51893017800CC9DF2 /* EWAAudioPlayerViewDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EWAAudioPlayerViewDemoTests-Info.plist"; sourceTree = "<group>"; };
 		C9E691A71893017800CC9DF2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C9E691A91893017900CC9DF2 /* EWAAudioPlayerViewDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EWAAudioPlayerViewDemoTests.m; sourceTree = "<group>"; };
+		C9E691B418930DDF00CC9DF2 /* EWAAudioPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EWAAudioPlayerView.h; sourceTree = "<group>"; };
+		C9E691B518930DDF00CC9DF2 /* EWAAudioPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EWAAudioPlayerView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +120,7 @@
 				C9E691901893017800CC9DF2 /* Main.storyboard */,
 				C9E691931893017800CC9DF2 /* EWAViewController.h */,
 				C9E691941893017800CC9DF2 /* EWAViewController.m */,
+				C9E691B318930DDF00CC9DF2 /* EWAAudioPlayerView */,
 				C9E691961893017800CC9DF2 /* Images.xcassets */,
 				C9E691851893017800CC9DF2 /* Supporting Files */,
 			);
@@ -151,6 +155,15 @@
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
+		};
+		C9E691B318930DDF00CC9DF2 /* EWAAudioPlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				C9E691B418930DDF00CC9DF2 /* EWAAudioPlayerView.h */,
+				C9E691B518930DDF00CC9DF2 /* EWAAudioPlayerView.m */,
+			);
+			path = EWAAudioPlayerView;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -252,6 +265,7 @@
 			files = (
 				C9E691951893017800CC9DF2 /* EWAViewController.m in Sources */,
 				C9E6918F1893017800CC9DF2 /* EWAAppDelegate.m in Sources */,
+				C9E691B618930DDF00CC9DF2 /* EWAAudioPlayerView.m in Sources */,
 				C9E6918B1893017800CC9DF2 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -463,6 +477,7 @@
 				C9E691AF1893017900CC9DF2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C9E691B01893017900CC9DF2 /* Build configuration list for PBXNativeTarget "EWAAudioPlayerViewDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -471,6 +486,7 @@
 				C9E691B21893017900CC9DF2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
