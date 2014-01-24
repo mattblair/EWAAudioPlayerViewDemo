@@ -1,5 +1,5 @@
 //
-//  EWAViewController.h
+//  DemoViewController.h
 //  EWAAudioPlayerViewDemo
 //
 //  Created by Matt Blair on 1/24/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EWAViewController : UIViewController
+@interface DemoViewController : UIViewController
 
 @end
