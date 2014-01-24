@@ -8,11 +8,32 @@
 
 #import "EWAAppDelegate.h"
 
+#import <AVFoundation/AVFoundation.h>
+
 @implementation EWAAppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    // Override point for customization after application launch.
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    // Configure audio session
+    NSError *audioSessionError = nil;
+    
+    // this configuration overrides the mute switch, and allows playback along with other sources, like music
+    BOOL audioSessionSuccess = [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback
+                                                                withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                                                                      error:&audioSessionError];
+    
+    if (!audioSessionSuccess) {
+        
+        NSLog(@"Error setting audio session: %@ with info: %@", audioSessionError, [audioSessionError userInfo]);
+    }
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    self.mainVC = [[DemoViewController alloc] initWithNibName:nil bundle:nil];
+    
+    self.window.rootViewController = self.mainVC;
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 							

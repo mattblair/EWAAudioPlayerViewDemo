@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+#import "DemoViewController.h"
+
 @interface EWAAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+
+@property (strong, nonatomic) DemoViewController *mainVC;
 
 @end
