@@ -14,8 +14,7 @@
 		C9E691891893017800CC9DF2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9E691871893017800CC9DF2 /* InfoPlist.strings */; };
 		C9E6918B1893017800CC9DF2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E6918A1893017800CC9DF2 /* main.m */; };
 		C9E6918F1893017800CC9DF2 /* EWAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E6918E1893017800CC9DF2 /* EWAAppDelegate.m */; };
-		C9E691921893017800CC9DF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9E691901893017800CC9DF2 /* Main.storyboard */; };
-		C9E691951893017800CC9DF2 /* EWAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E691941893017800CC9DF2 /* EWAViewController.m */; };
+		C9E691951893017800CC9DF2 /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E691941893017800CC9DF2 /* DemoViewController.m */; };
 		C9E691971893017800CC9DF2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9E691961893017800CC9DF2 /* Images.xcassets */; };
 		C9E6919E1893017800CC9DF2 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9E6919D1893017800CC9DF2 /* XCTest.framework */; };
 		C9E6919F1893017800CC9DF2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9E6917E1893017800CC9DF2 /* Foundation.framework */; };
@@ -47,9 +46,8 @@
 		C9E6918C1893017800CC9DF2 /* EWAAudioPlayerViewDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EWAAudioPlayerViewDemo-Prefix.pch"; sourceTree = "<group>"; };
 		C9E6918D1893017800CC9DF2 /* EWAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EWAAppDelegate.h; sourceTree = "<group>"; };
 		C9E6918E1893017800CC9DF2 /* EWAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EWAAppDelegate.m; sourceTree = "<group>"; };
-		C9E691911893017800CC9DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C9E691931893017800CC9DF2 /* EWAViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EWAViewController.h; sourceTree = "<group>"; };
-		C9E691941893017800CC9DF2 /* EWAViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EWAViewController.m; sourceTree = "<group>"; };
+		C9E691931893017800CC9DF2 /* DemoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController.h; sourceTree = "<group>"; };
+		C9E691941893017800CC9DF2 /* DemoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController.m; sourceTree = "<group>"; };
 		C9E691961893017800CC9DF2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C9E6919C1893017800CC9DF2 /* EWAAudioPlayerViewDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EWAAudioPlayerViewDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9E6919D1893017800CC9DF2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -121,9 +119,8 @@
 			children = (
 				C9E6918D1893017800CC9DF2 /* EWAAppDelegate.h */,
 				C9E6918E1893017800CC9DF2 /* EWAAppDelegate.m */,
-				C9E691901893017800CC9DF2 /* Main.storyboard */,
-				C9E691931893017800CC9DF2 /* EWAViewController.h */,
-				C9E691941893017800CC9DF2 /* EWAViewController.m */,
+				C9E691931893017800CC9DF2 /* DemoViewController.h */,
+				C9E691941893017800CC9DF2 /* DemoViewController.m */,
 				C9E691B318930DDF00CC9DF2 /* EWAAudioPlayerView */,
 				C9E691961893017800CC9DF2 /* Images.xcassets */,
 				C9E691851893017800CC9DF2 /* Supporting Files */,
@@ -248,7 +245,6 @@
 			files = (
 				C9E691971893017800CC9DF2 /* Images.xcassets in Resources */,
 				C9E691891893017800CC9DF2 /* InfoPlist.strings in Resources */,
-				C9E691921893017800CC9DF2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,7 +263,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9E691951893017800CC9DF2 /* EWAViewController.m in Sources */,
+				C9E691951893017800CC9DF2 /* DemoViewController.m in Sources */,
 				C9E6918F1893017800CC9DF2 /* EWAAppDelegate.m in Sources */,
 				C9E691B618930DDF00CC9DF2 /* EWAAudioPlayerView.m in Sources */,
 				C9E6918B1893017800CC9DF2 /* main.m in Sources */,
@@ -299,14 +295,6 @@
 				C9E691881893017800CC9DF2 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		C9E691901893017800CC9DF2 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C9E691911893017800CC9DF2 /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		C9E691A61893017800CC9DF2 /* InfoPlist.strings */ = {
