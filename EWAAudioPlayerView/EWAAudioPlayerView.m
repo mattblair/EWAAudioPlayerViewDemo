@@ -31,7 +31,10 @@
 
 // Based on the assumption that a clip is several minutes long, and the thumb
 // might not even move every second.
-#define AUDIO_DISPLAY_UPDATE_INTERVAL .5
+
+// .5 is good for a > 1 minute, but looks choppy with shorter clips
+// scale this to the length of the clip automatically?
+#define AUDIO_DISPLAY_UPDATE_INTERVAL .25
 
 @interface EWAAudioPlayerView ()
 
@@ -102,9 +105,9 @@
         // iPhone 4 running 7.0.3: y=9 looks too high, by about 3-4 pts
         // try adjusting the height of the UISlider? Is making it too short causing a side effect?
         
-        //CGFloat sliderY = ON_IOS7 ? 4.0 : 9.0;
+        CGFloat sliderY = ON_IOS7 ? 15.0 : 10.0;
         
-        CGFloat sliderY = 9.0; // seems to work better on most device/iOS combinations
+        //CGFloat sliderY = 9.0; // seems to work better on most device/iOS combinations
         CGRect sliderFrame = CGRectMake(42.0, sliderY, 192.0, 14.0);
         
         //NSLog(@"sliderFrame: %@", NSStringFromCGRect(sliderFrame));
