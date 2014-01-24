@@ -9,6 +9,19 @@
 #error This file must be compiled with ARC. Either turn on ARC for the project or use -fobjc-arc flag
 #endif
 
+// based on steipete's approach in this gist:
+// https://gist.github.com/steipete/6526860
+#ifndef kCFCoreFoundationVersionNumber_iOS_7_0
+#define kCFCoreFoundationVersionNumber_iOS_7_0 847.2
+#endif
+
+#ifndef ON_IOS7
+#define ON_IOS7 kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_7_0
+#endif
+
+#ifndef PRE_IOS7
+#define PRE_IOS7 kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_7_0
+#endif
 
 #import "EWAAudioPlayerView.h"
 
