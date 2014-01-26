@@ -57,7 +57,6 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 @property (nonatomic) BOOL playing;
 @property (nonatomic) NSTimeInterval lastPauseTime;
 
-
 @property (strong, nonatomic) UILabel *currentTime;
 @property (strong, nonatomic) UILabel *totalTime;
 @property (strong, nonatomic) UISlider *audioScrubber;
@@ -72,9 +71,9 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 
 #pragma mark - View lifecycle
 
-- (id)initWithAudioURL:(NSURL *)audioURL images:(NSDictionary *)imageNames {
+- (id)initWithAudioURL:(NSURL *)audioURL images:(NSDictionary *)imageNames atY:(CGFloat)playerY {
     
-    CGRect defaultFrame = CGRectMake(0.0, 0.0, 320.0, 44.0); // height was 52
+    CGRect defaultFrame = CGRectMake(0.0, playerY, 320.0, 44.0); // height was 52
     
     self = [super initWithFrame:defaultFrame];
     if (self) {

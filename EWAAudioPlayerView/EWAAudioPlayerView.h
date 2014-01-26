@@ -29,7 +29,7 @@ extern NSString* const kEWAAudioPlayerPlayedTrackImageKey;
 
 // add notes about setting background color/view
 
-- (id)initWithAudioURL:(NSURL *)audioURL images:(NSDictionary *)imageNames;
+- (id)initWithAudioURL:(NSURL *)audioURL images:(NSDictionary *)imageNames atY:(CGFloat)playerY;
 
 - (void)pausePlayback;
 - (void)resumePlayback;
