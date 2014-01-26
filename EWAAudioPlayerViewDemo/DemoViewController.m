@@ -61,12 +61,8 @@
     if (bundleAudioURL) {
         
         self.basicAudioPlayerView = [[EWAAudioPlayerView alloc] initWithAudioURL:bundleAudioURL
-                                                                          images:nil];
-        
-        // get frame and reset y
-        CGRect audioRect = self.basicAudioPlayerView.frame;
-        audioRect.origin.y = self.yForNextView;
-        self.basicAudioPlayerView.frame = audioRect;
+                                                                          images:nil
+                                                                             atY:self.yForNextView];
         
 #warning Eliminate this? Is it a default? It should be.
         self.basicAudioPlayerView.backgroundColor = [UIColor whiteColor];
@@ -74,7 +70,7 @@
         [self.view addSubview:self.basicAudioPlayerView];
         
         // increment y
-        self.yForNextView += audioRect.size.height + VERTICAL_SPACER_EXTRA;
+        self.yForNextView += self.basicAudioPlayerView.frame.size.height + VERTICAL_SPACER_EXTRA;
         
     } else {
         
@@ -96,18 +92,15 @@
                                      kEWAAudioPlayerPlayedTrackImageKey : kMinimumTrackImage };
         
         self.styledAudioPlayerView = [[EWAAudioPlayerView alloc] initWithAudioURL:bundleAudioURL
-                                                                           images:imageNames];
+                                                                           images:imageNames
+                                                                              atY:self.yForNextView];
         
-        // get frame and reset y
-        CGRect audioRect = self.basicAudioPlayerView.frame;
-        audioRect.origin.y = self.yForNextView;
-        self.styledAudioPlayerView.frame = audioRect;
         self.styledAudioPlayerView.backgroundColor = [UIColor whiteColor];
         
         [self.view addSubview:self.styledAudioPlayerView];
         
         // increment y
-        self.yForNextView += audioRect.size.height + VERTICAL_SPACER_EXTRA;
+        self.yForNextView += self.basicAudioPlayerView.frame.size.height + VERTICAL_SPACER_EXTRA;
         
     } else {
         
