@@ -78,7 +78,7 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
     self = [super initWithFrame:defaultFrame];
     if (self) {
         
-        self.backgroundColor = [UIColor underPageBackgroundColor];
+        self.backgroundColor = [UIColor clearColor];
         
         self.playing = NO;
         
