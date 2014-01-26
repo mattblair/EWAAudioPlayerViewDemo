@@ -64,9 +64,6 @@
                                                                           images:nil
                                                                              atY:self.yForNextView];
         
-#warning Eliminate this? Is it a default? It should be.
-        self.basicAudioPlayerView.backgroundColor = [UIColor whiteColor];
-        
         [self.view addSubview:self.basicAudioPlayerView];
         
         // increment y
@@ -94,8 +91,6 @@
         self.styledAudioPlayerView = [[EWAAudioPlayerView alloc] initWithAudioURL:bundleAudioURL
                                                                            images:imageNames
                                                                               atY:self.yForNextView];
-        
-        self.styledAudioPlayerView.backgroundColor = [UIColor whiteColor];
         
         [self.view addSubview:self.styledAudioPlayerView];
         
