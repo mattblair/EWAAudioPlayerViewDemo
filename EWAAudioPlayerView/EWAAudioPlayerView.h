@@ -20,7 +20,8 @@
 
 
 #import <UIKit/UIKit.h>
-#import <AVFoundation/AVFoundation.h>
+
+@protocol AVAudioPlayerDelegate;
 
 @interface EWAAudioPlayerView : UIView <AVAudioPlayerDelegate>
 

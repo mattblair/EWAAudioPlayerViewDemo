@@ -23,6 +23,8 @@
 #define PRE_IOS7 kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_7_0
 #endif
 
+#import <AVFoundation/AVFoundation.h>
+
 #import "EWAAudioPlayerView.h"
 
 #define AUDIO_TIME_DEFAULT_Y 6.0
