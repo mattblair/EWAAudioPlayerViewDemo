@@ -27,6 +27,18 @@
 
 #import "EWAAudioPlayerView.h"
 
+NSString* const kEWAAudioPlayerPlayImageKey = @"kEWAAudioPlayerPlayImageKey";
+NSString* const kEWAAudioPlayerPauseImageKey = @"kEWAAudioPlayerPauseImageKey";
+NSString* const kEWAAudioPlayerThumbImageKey = @"kEWAAudioPlayerThumbImageKey";
+NSString* const kEWAAudioPlayerUnplayedTrackImageKey = @"kEWAAudioPlayerUnplayedTrackImageKey";
+NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrackImageKey";
+
+// private constants
+
+// default images (current layout expects a @1x image of 7 x 14)
+#define PLAY_BUTTON_IMAGE @"play-audio"
+#define PAUSE_BUTTON_IMAGE @"pause-audio"
+
 #define AUDIO_TIME_DEFAULT_Y 6.0
 #define AUDIO_TIME_LABEL_WIDTH 28.0
 #define AUDIO_TIME_LABEL_FONT_SIZE 12.0 // was 10.0, but that's too small

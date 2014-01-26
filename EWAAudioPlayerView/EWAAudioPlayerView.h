@@ -6,20 +6,16 @@
 //
 
 // initial version of this will assume iPhone/popover width of 320 points.
-
-// default images (current layout expects a @1x image of 7 x 14)
-#define PLAY_BUTTON_IMAGE @"play-audio"
-#define PAUSE_BUTTON_IMAGE @"pause-audio"
-
-// dictionary keys for setting custom images on init
-#define kEWAAudioPlayerPlayImageKey @"kEWAAudioPlayerPlayImageKey"
-#define kEWAAudioPlayerPauseImageKey @"kEWAAudioPlayerPauseImageKey"
-#define kEWAAudioPlayerThumbImageKey @"kEWAAudioPlayerThumbImageKey"
-#define kEWAAudioPlayerUnplayedTrackImageKey @"kEWAAudioPlayerUnplayedTrackImageKey"
-#define kEWAAudioPlayerPlayedTrackImageKey @"kEWAAudioPlayerPlayedTrackImageKey"
-
+// a future version should handle variables widths, and margins
 
 #import <UIKit/UIKit.h>
+
+// dictionary keys for setting custom images on init
+extern NSString* const kEWAAudioPlayerPlayImageKey;
+extern NSString* const kEWAAudioPlayerPauseImageKey;
+extern NSString* const kEWAAudioPlayerThumbImageKey;
+extern NSString* const kEWAAudioPlayerUnplayedTrackImageKey;
+extern NSString* const kEWAAudioPlayerPlayedTrackImageKey;
 
 @protocol AVAudioPlayerDelegate;
 
