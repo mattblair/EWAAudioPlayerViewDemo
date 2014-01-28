@@ -23,6 +23,19 @@
 #define PRE_IOS7 kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_7_0
 #endif
 
+// From Marcus Zarra, as defined here:
+// http://www.cimgf.com/2010/05/02/my-current-prefix-pch-file/
+// and
+// https://github.com/ZarraStudios/ZDS_Shared
+
+#ifndef DLog
+#ifdef DEBUG
+#define DLog(...) NSLog(@"%s(%p) %@", __PRETTY_FUNCTION__, self, [NSString stringWithFormat:__VA_ARGS__])
+#else
+#define DLog(...) do { } while (0)
+#endif
+#endif
+
 #import <AVFoundation/AVFoundation.h>
 
 #import "EWAAudioPlayerView.h"
@@ -123,7 +136,7 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
         //CGFloat sliderY = 9.0; // seems to work better on most device/iOS combinations
         CGRect sliderFrame = CGRectMake(42.0, sliderY, 192.0, 14.0);
         
-        //NSLog(@"sliderFrame: %@", NSStringFromCGRect(sliderFrame));
+        //DLog(@"sliderFrame: %@", NSStringFromCGRect(sliderFrame));
         
         self.audioScrubber = [[UISlider alloc] initWithFrame:sliderFrame];
         
@@ -214,13 +227,13 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 
 - (id)initWithFrame:(CGRect)frame
 {
-    NSLog(@"WARNING: Do not use initWithFrame with this class.");
+    DLog(@"WARNING: Do not use initWithFrame with this class.");
     return nil;
 }
 
 - (void)handleBackgrounding:(NSNotification *)note {
     
-    NSLog(@"Pausing audio player");
+    DLog(@"Pausing audio player");
     
     [self pauseAudio];
 }
@@ -228,7 +241,7 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 - (void)prepareToBeForegrounded:(NSNotification *)note {
     
     // reset audio to 0, or to last time stored?
-    NSLog(@"Foregrounded");
+    DLog(@"Foregrounded");
     
     [self resumePlayback];
 }
@@ -255,7 +268,7 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 
 - (void)updateThumbAndTime {
     
-    NSLog(@"Current time is %g", self.audioPlayer.currentTime);
+    DLog(@"Current time is %g", self.audioPlayer.currentTime);
     
     [self updateCurrentTimeDisplay];
     [self updateScrubberThumbPosition];
@@ -361,7 +374,7 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
     [self.thumbTimer invalidate];
     self.thumbTimer = nil;
     
-    NSLog(@"AudioPlayer finished %@", flag ? @"successfully." : @"badly!");
+    DLog(@"AudioPlayer finished %@", flag ? @"successfully." : @"badly!");
     
     [self updateThumbAndTime];
     
@@ -370,7 +383,7 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 
 - (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error {
     
-    NSLog(@"Audio decoding failed with error: %@", error);
+    DLog(@"Audio decoding failed with error: %@", error);
     
     self.audioScrubber.value = 0;
     
@@ -380,7 +393,7 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 // doesn't get called on backgrounding ?
 - (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player {
     
-    NSLog(@"Audio player interrupted.");
+    DLog(@"Audio player interrupted.");
     
     [self pausePlayback];
 }
@@ -393,7 +406,7 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
     //    AVAudioSessionInterruptionOptionShouldResume = 1
     //} AVAudioSessionInterruptionOptions;
     
-    NSLog(@"Options: %d", flags);
+    DLog(@"Options: %d", flags);
     
     // don't restart
 }
