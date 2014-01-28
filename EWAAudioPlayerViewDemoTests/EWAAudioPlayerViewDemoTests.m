@@ -3,7 +3,8 @@
 //  EWAAudioPlayerViewDemoTests
 //
 //  Created by Matt Blair on 1/24/14.
-//  Copyright (c) 2014 Elsewise. All rights reserved.
+//  Copyright (c) 2014 Elsewise LLC
+//  License: MIT
 //
 
 #import <XCTest/XCTest.h>
