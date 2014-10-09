@@ -96,7 +96,7 @@
         [self.view addSubview:self.styledAudioPlayerView];
         
         // increment y
-        self.yForNextView += self.basicAudioPlayerView.frame.size.height + VERTICAL_SPACER_EXTRA;
+        self.yForNextView += self.styledAudioPlayerView.frame.size.height + VERTICAL_SPACER_EXTRA;
         
     } else {
         
@@ -107,6 +107,16 @@
                                           atY:self.yForNextView];
     
     // streaming player
+    
+    NSURL *streamingURL = [NSURL URLWithString:kStreamingAudioURL];
+    
+    self.streamingAudioPlayerView = [[EWAAudioPlayerView alloc] initWithAudioURL:streamingURL
+                                                                          images:nil
+                                                                             atY:self.yForNextView];
+    
+    [self.view addSubview:self.streamingAudioPlayerView];
+    
+    self.yForNextView += self.streamingAudioPlayerView.frame.size.height + VERTICAL_SPACER_EXTRA;
 }
 
 // configure the label, add it to the view, and increment y

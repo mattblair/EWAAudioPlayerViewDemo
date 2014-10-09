@@ -67,6 +67,9 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 
 @property (strong, nonatomic) AVAudioPlayer *audioPlayer;
 
+@property (strong, nonatomic) AVPlayer *remotePlayer;
+
+@property (nonatomic) BOOL localFile;
 @property (nonatomic) BOOL playing;
 @property (nonatomic) NSTimeInterval lastPauseTime;
 
@@ -86,6 +89,7 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 
 - (id)initWithAudioURL:(NSURL *)audioURL images:(NSDictionary *)imageNames atY:(CGFloat)playerY {
     
+#warning Magic Numbers!!!
     CGRect defaultFrame = CGRectMake(0.0, playerY, 320.0, 44.0); // height was 52
     
     self = [super initWithFrame:defaultFrame];
@@ -98,19 +102,38 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
         // init this with a bogus value
         self.lastPauseTime = -1.0;
         
-        NSError *audioError = nil;
         
-        // test audioURL to see if it's a file URL:
+        // test audioURL to see if it's a file URL that AVAudioPlayer can handle
         // https://developer.apple.com/library/ios/qa/qa1634/_index.html
-        
-        // if it's not, try AVPLayer instead, or assign a delegate to download and re-init on completion
-        
-        self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:audioURL
-                                                                  error:&audioError];
-        
-        // test audioError here?
-        
-        self.audioPlayer.delegate = self;
+        if ([audioURL isFileURL]) {
+            
+            NSError *audioError = nil;
+            self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:audioURL
+                                                                      error:&audioError];
+            // TODO: test audioError here?
+            
+            self.audioPlayer.delegate = self;
+            
+            self.localFile = YES;
+            
+        } else { // if it's not, use AVPLayer for a remote audio file
+            
+            self.remotePlayer = [AVPlayer playerWithURL:audioURL];
+            
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(playerItemEnded:)
+                                                         name:AVPlayerItemDidPlayToEndTimeNotification
+                                                       object:nil];
+            
+            // set up KVO to react when the player is ready
+            NSString *kp = NSStringFromSelector(@selector(status));
+            [self.remotePlayer addObserver:self
+                                forKeyPath:kp //@"status"
+                                   options:0
+                                   context:NULL];
+            
+            self.localFile = NO;
+        }
         
         CGRect currentFrame = CGRectMake(10.0, AUDIO_TIME_DEFAULT_Y, AUDIO_TIME_LABEL_WIDTH, 30.0);
         
@@ -141,7 +164,9 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
         self.audioScrubber = [[UISlider alloc] initWithFrame:sliderFrame];
         
         self.audioScrubber.value = 0.0;
-        self.audioScrubber.maximumValue = self.audioPlayer.duration;
+        
+        // this will be reset once remotePlayer's status is readyToPlay
+        self.audioScrubber.maximumValue = self.localFile ? self.audioPlayer.duration : 1.0;
         
         [self.audioScrubber addTarget:self
                                action:@selector(handleScrubbing)
@@ -211,6 +236,9 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
         
         [self addSubview:self.playButton];
         
+        // remotePlayer will enable the button when it's in readyToPlay status
+        self.playButton.enabled = self.localFile ? YES : NO;
+        
         // UIApplicationDidEnterBackgroundNotification is too late to handle audio
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(handleBackgrounding:)
@@ -248,7 +276,49 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 
 - (void)dealloc {
     
+    if (!self.localFile) {
+        [self.remotePlayer removeObserver:self
+                               forKeyPath:NSStringFromSelector(@selector(status))];
+    }
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
+#pragma mark - Player Property Utility Methods
+
+- (BOOL)playerIsPlaying {
+    
+    if (self.localFile) {
+        return self.audioPlayer.playing;
+    } else {
+        //TODO: Is this the best option?
+        return self.remotePlayer.rate > 0.0;
+    }
+}
+
+- (NSTimeInterval)currentPlayerTime {
+    
+    if (self.localFile) {
+        return self.audioPlayer.currentTime;
+    } else {
+        
+        if (self.remotePlayer.status == AVPlayerStatusReadyToPlay) {
+            return CMTimeGetSeconds(self.remotePlayer.currentTime);
+        } else {
+            return 0.0;
+        }
+    }
+}
+
+- (NSTimeInterval)audioDuration {
+    
+    if (self.localFile) {
+        return self.audioPlayer.duration;
+    } else {
+        // is duration available from any file format? If not, use cached duration?
+        return -1.0;
+    }
 }
 
 
@@ -256,19 +326,20 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 
 - (void)updateCurrentTimeDisplay {
     
-    int current = (int)self.audioPlayer.currentTime;
-    
+    int current = (int)[self currentPlayerTime];
     self.currentTime.text = [NSString stringWithFormat:@"%d:%02d", current / 60, current % 60, nil];
 }
 
 - (void)updateScrubberThumbPosition {
     
-    self.audioScrubber.value = self.audioPlayer.currentTime;
+    self.audioScrubber.value = [self currentPlayerTime];
 }
 
 - (void)updateThumbAndTime {
     
-    DLog(@"Current time is %g", self.audioPlayer.currentTime);
+    if (self.localFile) {
+        DLog(@"Current time is %g", self.audioPlayer.currentTime);
+    }
     
     [self updateCurrentTimeDisplay];
     [self updateScrubberThumbPosition];
@@ -301,7 +372,11 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
         
         self.playing = YES;
         
-        [self.audioPlayer play];
+        if (self.localFile) {
+            [self.audioPlayer play];
+        } else {
+            [self.remotePlayer play];
+        }
         
         self.thumbTimer = [NSTimer scheduledTimerWithTimeInterval:AUDIO_DISPLAY_UPDATE_INTERVAL
                                                            target:self
@@ -309,7 +384,7 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
                                                          userInfo:nil
                                                           repeats:YES];
         
-        self.playButton.selected = self.audioPlayer.playing;
+        self.playButton.selected = [self playerIsPlaying];
     }
 }
 
@@ -319,20 +394,28 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
         
         self.playing = NO;
         
-        [self.audioPlayer pause];
+        if (self.localFile) {
+            [self.audioPlayer pause];
+        } else {
+            [self.remotePlayer pause];
+        }
+        
         [self.thumbTimer invalidate];
         
-        if (self.audioPlayer.currentTime > 0.0) {
+        // TODO: Add utility method for caching pause time, if needed
+        
+        if (self.localFile && self.audioPlayer.currentTime > 0.0) {
+            
             self.lastPauseTime = self.audioPlayer.currentTime;
         }
         
-        self.playButton.selected = self.audioPlayer.playing;
+        self.playButton.selected = [self playerIsPlaying];
     }
 }
 
 - (void)togglePlayStatus {
     
-    // manage state with superview property instead of audioplayer property:
+    // manage state with view property instead of player property:
     if (self.playing) {
         [self pauseAudio];
     } else {
@@ -342,7 +425,12 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 
 - (void)handleScrubbing {
     
-    self.audioPlayer.currentTime = self.audioScrubber.value;
+    if (self.localFile) {
+        self.audioPlayer.currentTime = self.audioScrubber.value;
+    } else {
+        
+        DLog(@"WARNING: scrubbing not implemented for streaming audio.");
+    }
     
     [self updateCurrentTimeDisplay];
 }
@@ -360,7 +448,13 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
     // resume playback -- or return to the start and play?
     
     if (self.lastPauseTime > 0.0) {
-        self.audioPlayer.currentTime = self.lastPauseTime;
+        
+        if (self.localFile) {
+            self.audioPlayer.currentTime = self.lastPauseTime;
+        } else {
+            // TODO: convert pauseTime to CMTime, set for remotePlayer?
+            // seems to work fine without it, so far.
+        }
         
         [self playAudio];
     }
@@ -406,9 +500,68 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
     //    AVAudioSessionInterruptionOptionShouldResume = 1
     //} AVAudioSessionInterruptionOptions;
     
-    DLog(@"Options: %d", flags);
+    DLog(@"Options: %lu", (unsigned long)flags);
     
     // don't restart
+}
+
+
+#pragma mark - React to AVPlayer (Streaming) Status
+
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    
+    NSString *kp = NSStringFromSelector(@selector(status));
+    
+    if (object == self.remotePlayer && [keyPath isEqualToString:kp]) {
+        
+        switch (self.remotePlayer.status) {
+            
+            case AVPlayerStatusReadyToPlay: {
+                DLog(@"Ready");
+                
+                // enable playback UI
+                self.playButton.enabled = YES;
+                
+                // TODO: doesn't seem available with mp3. Try with caf.
+                AVPlayerItem *item = self.remotePlayer.currentItem;
+                
+                if (!CMTIME_IS_INDEFINITE(item.duration)) {
+                    
+# warning CMTimeGetSeconds() returns float64, while maximumValue is a float
+                    self.audioScrubber.maximumValue = CMTimeGetSeconds(self.remotePlayer.currentItem.duration);
+                    
+                } else {
+                    DLog(@"Duration is still not defined.");
+                }
+                
+                break;
+            }
+                
+            case AVPlayerStatusFailed: {
+                DLog(@"WARNING: PLayer status is failed, with error: %@", self.remotePlayer.error);
+                
+                // disable playback UI, show notice to user?
+                self.playButton.enabled = NO;
+                
+                break;
+            }
+                
+            default: {
+                DLog(@"Presumably unknown?");
+                self.playButton.enabled = NO;
+                
+                break;
+            }
+        }
+    }
+    
+    // call super? Does UIView implement it?
+}
+             
+- (void)playerItemEnded:(NSNotification *)note {
+ 
+    // update UI here?
+    DLog(@"Playback completed with note: %@", note);
 }
 
 @end
