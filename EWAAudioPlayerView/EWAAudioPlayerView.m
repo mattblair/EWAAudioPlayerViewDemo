@@ -211,6 +211,8 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
         
         self.playButton = [[UIButton alloc] initWithFrame:buttonFrame];
         
+        // replaced with using text when no custom images are specified
+        /*
         NSString *playImage = nil;
         NSString *pauseImage = nil;
         
@@ -221,14 +223,32 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
             playImage = PLAY_BUTTON_IMAGE;
             pauseImage = PAUSE_BUTTON_IMAGE;
         }
+        */
         
         self.playButton.imageEdgeInsets = UIEdgeInsetsMake(8.0, 8.0, 8.0, 8.0);
         
-        [self.playButton setImage:[UIImage imageNamed:playImage]
-                         forState:UIControlStateNormal];
-        
-        [self.playButton setImage:[UIImage imageNamed:pauseImage]
-                         forState:UIControlStateSelected];
+        if (imageNames) {
+            
+            NSString *playImage = [imageNames objectForKey:kEWAAudioPlayerPlayImageKey];
+            NSString *pauseImage = [imageNames objectForKey:kEWAAudioPlayerPauseImageKey];
+            
+            [self.playButton setImage:[UIImage imageNamed:playImage]
+                             forState:UIControlStateNormal];
+            
+            [self.playButton setImage:[UIImage imageNamed:pauseImage]
+                             forState:UIControlStateSelected];
+        } else {
+            
+            [self.playButton setTitle:@"Play"
+                             forState:UIControlStateNormal];
+            
+            [self.playButton setTitle:@"Pause"
+                             forState:UIControlStateSelected];
+            
+            // shouldn't this happen automatically?
+            [self.playButton setTitleColor:[self tintColor]
+                                  forState:UIControlStateNormal];
+        }
         
         [self.playButton addTarget:self
                             action:@selector(togglePlayStatus)
