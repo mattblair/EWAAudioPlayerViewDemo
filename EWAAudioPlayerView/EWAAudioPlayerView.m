@@ -52,6 +52,9 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 #define PLAY_BUTTON_IMAGE @"play-audio"
 #define PAUSE_BUTTON_IMAGE @"pause-audio"
 
+#define PLAY_BUTTON_WIDTH_IMAGE 44.0
+#define PLAY_BUTTON_WIDTH_TEXT 64.0
+
 #define AUDIO_TIME_DEFAULT_Y 6.0
 #define AUDIO_TIME_LABEL_WIDTH 28.0
 #define AUDIO_TIME_LABEL_FONT_SIZE 12.0 // was 10.0, but that's too small
@@ -64,6 +67,8 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 #define AUDIO_DISPLAY_UPDATE_INTERVAL .25
 
 @interface EWAAudioPlayerView ()
+
+@property (strong, nonatomic) NSDictionary *imageNames;
 
 @property (strong, nonatomic) AVAudioPlayer *audioPlayer;
 
@@ -87,7 +92,7 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 
 #pragma mark - View lifecycle
 
-- (id)initWithAudioURL:(NSURL *)audioURL images:(NSDictionary *)imageNames atY:(CGFloat)playerY {
+- (id)initWithAudioURL:(NSURL *)audioURL images:(NSDictionary *)images atY:(CGFloat)playerY {
     
 #warning Magic Numbers!!!
     CGRect defaultFrame = CGRectMake(0.0, playerY, 320.0, 44.0); // height was 52
@@ -96,6 +101,8 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
     if (self) {
         
         self.backgroundColor = [UIColor clearColor];
+        
+        self.imageNames = images;
         
         self.playing = NO;
         
@@ -135,119 +142,10 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
             self.localFile = NO;
         }
         
-        CGRect currentFrame = CGRectMake(10.0, AUDIO_TIME_DEFAULT_Y, AUDIO_TIME_LABEL_WIDTH, 30.0);
-        
-        self.currentTime = [[UILabel alloc] initWithFrame:currentFrame];
-        
-        self.currentTime.text = @"0:00";
-        self.currentTime.font = [UIFont systemFontOfSize:AUDIO_TIME_LABEL_FONT_SIZE];
-        self.currentTime.backgroundColor = [UIColor clearColor];
-        self.currentTime.textAlignment = NSTextAlignmentCenter;
-        
-        [self addSubview:self.currentTime];
-        
-        // adjust/calculate for different UIKit metrics
-        // would also need to be adjusted for custom images with different metrics
-        // On-device test results using KBB graphics:
-        // iPhone 5 running 7.0.2: y=4 was better. Not so after 7.0.3 update.
-        // iPhone 4 running 6.0.1: y=9 looks best.
-        // iPhone 4 running 7.0.3: y=9 looks too high, by about 3-4 pts
-        // try adjusting the height of the UISlider? Is making it too short causing a side effect?
-        
-        CGFloat sliderY = ON_IOS7 ? 15.0 : 10.0;
-        
-        //CGFloat sliderY = 9.0; // seems to work better on most device/iOS combinations
-        CGRect sliderFrame = CGRectMake(42.0, sliderY, 192.0, 14.0);
-        
-        //DLog(@"sliderFrame: %@", NSStringFromCGRect(sliderFrame));
-        
-        self.audioScrubber = [[UISlider alloc] initWithFrame:sliderFrame];
-        
-        self.audioScrubber.value = 0.0;
-        
-        // this will be reset once remotePlayer's status is readyToPlay
-        self.audioScrubber.maximumValue = self.localFile ? self.audioPlayer.duration : 1.0;
-        
-        [self.audioScrubber addTarget:self
-                               action:@selector(handleScrubbing)
-                     forControlEvents:UIControlEventValueChanged];
-        
-        if (imageNames) {
-            
-            // track images are 192 x 14
-            UIImage *minTrackImage = [UIImage imageNamed:[imageNames objectForKey:kEWAAudioPlayerPlayedTrackImageKey]];
-            UIImage *maxTrackImage = [UIImage imageNamed:[imageNames objectForKey:kEWAAudioPlayerUnplayedTrackImageKey]];
-            UIImage *thumbImage = [UIImage imageNamed:[imageNames objectForKey:kEWAAudioPlayerThumbImageKey]];
-            
-            if (minTrackImage && maxTrackImage && thumbImage) {
-                
-                [self.audioScrubber setMinimumTrackImage:minTrackImage
-                                                forState:UIControlStateNormal];
-                
-                [self.audioScrubber setMaximumTrackImage:maxTrackImage
-                                                forState:UIControlStateNormal];
-                
-                [self.audioScrubber setThumbImage:thumbImage
-                                         forState:UIControlStateNormal];
-            }
-        }
-        
-        [self addSubview:self.audioScrubber];
-        
-        CGRect totalFrame = CGRectMake(240.0, AUDIO_TIME_DEFAULT_Y, AUDIO_TIME_LABEL_WIDTH, 30.0);
-        
-        self.totalTime = [[UILabel alloc] initWithFrame:totalFrame];
-        self.totalTime.font = [UIFont systemFontOfSize:AUDIO_TIME_LABEL_FONT_SIZE];
-        self.totalTime.backgroundColor = [UIColor clearColor];
-        self.totalTime.textAlignment = NSTextAlignmentCenter;
-        
-        self.totalTime.text = [NSString stringWithFormat:@"%d:%02d",
-                               (int)self.audioPlayer.duration / 60, (int)self.audioPlayer.duration % 60, nil];
-        
-        [self addSubview:self.totalTime];
-        
-        //CGRect buttonFrame = CGRectMake(274.0, 7.0, 28.0, 28.0);
-        CGRect buttonFrame = CGRectMake(266.0, -1.0, 44.0, 44.0);
-        
-        self.playButton = [[UIButton alloc] initWithFrame:buttonFrame];
-        
-        // replaced with using text when no custom images are specified
-        /*
-        NSString *playImage = nil;
-        NSString *pauseImage = nil;
-        
-        if (imageNames) {
-            playImage = [imageNames objectForKey:kEWAAudioPlayerPlayImageKey];
-            pauseImage = [imageNames objectForKey:kEWAAudioPlayerPauseImageKey];
+        if (self.localFile) {
+            [self setupLocalScrubbingUI];
         } else {
-            playImage = PLAY_BUTTON_IMAGE;
-            pauseImage = PAUSE_BUTTON_IMAGE;
-        }
-        */
-        
-        self.playButton.imageEdgeInsets = UIEdgeInsetsMake(8.0, 8.0, 8.0, 8.0);
-        
-        if (imageNames) {
-            
-            NSString *playImage = [imageNames objectForKey:kEWAAudioPlayerPlayImageKey];
-            NSString *pauseImage = [imageNames objectForKey:kEWAAudioPlayerPauseImageKey];
-            
-            [self.playButton setImage:[UIImage imageNamed:playImage]
-                             forState:UIControlStateNormal];
-            
-            [self.playButton setImage:[UIImage imageNamed:pauseImage]
-                             forState:UIControlStateSelected];
-        } else {
-            
-            [self.playButton setTitle:@"Play"
-                             forState:UIControlStateNormal];
-            
-            [self.playButton setTitle:@"Pause"
-                             forState:UIControlStateSelected];
-            
-            // shouldn't this happen automatically?
-            [self.playButton setTitleColor:[self tintColor]
-                                  forState:UIControlStateNormal];
+            [self setupRemoteUI];
         }
         
         [self.playButton addTarget:self
@@ -271,6 +169,165 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
                                                    object:nil];
     }
     return self;
+}
+
+- (void)setupLocalScrubbingUI {
+    
+    // TODO: setup layout variables based on whether images are defined or not
+    // This really just needs to get converted to Auto Layout
+    
+    CGFloat playButtonWidth = self.imageNames ? PLAY_BUTTON_WIDTH_IMAGE : PLAY_BUTTON_WIDTH_TEXT;
+    CGFloat nextX = 10.0;
+    
+    CGRect currentFrame = CGRectMake(nextX, AUDIO_TIME_DEFAULT_Y, AUDIO_TIME_LABEL_WIDTH, 30.0);
+    
+    self.currentTime = [[UILabel alloc] initWithFrame:currentFrame];
+    
+    self.currentTime.text = @"0:00";
+    self.currentTime.font = [UIFont systemFontOfSize:AUDIO_TIME_LABEL_FONT_SIZE];
+    self.currentTime.backgroundColor = [UIColor clearColor];
+    self.currentTime.textAlignment = NSTextAlignmentCenter;
+    
+    [self addSubview:self.currentTime];
+    
+    // adjust/calculate for different UIKit metrics
+    // would also need to be adjusted for custom images with different metrics
+    // On-device test results using KBB graphics:
+    // iPhone 5 running 7.0.2: y=4 was better. Not so after 7.0.3 update.
+    // iPhone 4 running 6.0.1: y=9 looks best.
+    // iPhone 4 running 7.0.3: y=9 looks too high, by about 3-4 pts
+    // try adjusting the height of the UISlider? Is making it too short causing a side effect?
+    
+    nextX += AUDIO_TIME_LABEL_WIDTH + 5.0;
+    
+    // deprecated?
+    CGFloat scrubberY = ON_IOS7 ? 15.0 : 10.0;
+    
+    // magic numbers version 192
+    CGFloat scrubberWidth = self.imageNames ? 192.0 : 172.0;
+    
+    
+    //CGFloat sliderY = 9.0; // seems to work better on most device/iOS combinations
+    CGRect scrubberFrame = CGRectMake(nextX, scrubberY, scrubberWidth, 14.0);
+    
+    //DLog(@"sliderFrame: %@", NSStringFromCGRect(sliderFrame));
+    
+    self.audioScrubber = [[UISlider alloc] initWithFrame:scrubberFrame];
+    
+    self.audioScrubber.value = 0.0;
+    
+    // FUTURE: could be reset once remotePlayer's status is readyToPlay,
+    // if duration is valid at that point
+    self.audioScrubber.maximumValue = self.localFile ? self.audioPlayer.duration : 1.0;
+    
+    [self.audioScrubber addTarget:self
+                           action:@selector(handleScrubbing)
+                 forControlEvents:UIControlEventValueChanged];
+    
+    if (self.imageNames) {
+        
+        // track images are 192 x 14
+        UIImage *minTrackImage = [UIImage imageNamed:[self.imageNames objectForKey:kEWAAudioPlayerPlayedTrackImageKey]];
+        UIImage *maxTrackImage = [UIImage imageNamed:[self.imageNames objectForKey:kEWAAudioPlayerUnplayedTrackImageKey]];
+        UIImage *thumbImage = [UIImage imageNamed:[self.imageNames objectForKey:kEWAAudioPlayerThumbImageKey]];
+        
+        if (minTrackImage && maxTrackImage && thumbImage) {
+            
+            [self.audioScrubber setMinimumTrackImage:minTrackImage
+                                            forState:UIControlStateNormal];
+            
+            [self.audioScrubber setMaximumTrackImage:maxTrackImage
+                                            forState:UIControlStateNormal];
+            
+            [self.audioScrubber setThumbImage:thumbImage
+                                     forState:UIControlStateNormal];
+        }
+    }
+    
+    [self addSubview:self.audioScrubber];
+    
+    nextX += scrubberWidth + 5.0;
+    
+    CGRect totalFrame = CGRectMake(nextX, AUDIO_TIME_DEFAULT_Y, AUDIO_TIME_LABEL_WIDTH, 30.0);
+    
+    self.totalTime = [[UILabel alloc] initWithFrame:totalFrame];
+    self.totalTime.font = [UIFont systemFontOfSize:AUDIO_TIME_LABEL_FONT_SIZE];
+    self.totalTime.backgroundColor = [UIColor clearColor];
+    self.totalTime.textAlignment = NSTextAlignmentCenter;
+    
+    self.totalTime.text = [NSString stringWithFormat:@"%d:%02d",
+                           (int)self.audioPlayer.duration / 60, (int)self.audioPlayer.duration % 60, nil];
+    
+    [self addSubview:self.totalTime];
+    
+    nextX += AUDIO_TIME_LABEL_WIDTH;
+    // was x=266 x/ 44 square, but that doesn't work for text button
+    CGRect buttonFrame = CGRectMake(nextX, -1.0, playButtonWidth, 44.0);
+    
+    self.playButton = [[UIButton alloc] initWithFrame:buttonFrame];
+    
+    // replaced with using text when no custom images are specified
+    /*
+     NSString *playImage = nil;
+     NSString *pauseImage = nil;
+     
+     if (imageNames) {
+     playImage = [imageNames objectForKey:kEWAAudioPlayerPlayImageKey];
+     pauseImage = [imageNames objectForKey:kEWAAudioPlayerPauseImageKey];
+     } else {
+     playImage = PLAY_BUTTON_IMAGE;
+     pauseImage = PAUSE_BUTTON_IMAGE;
+     }
+     */
+    
+    self.playButton.imageEdgeInsets = UIEdgeInsetsMake(8.0, 8.0, 8.0, 8.0);
+    
+    if (self.imageNames) {
+        
+        NSString *playImage = [self.imageNames objectForKey:kEWAAudioPlayerPlayImageKey];
+        NSString *pauseImage = [self.imageNames objectForKey:kEWAAudioPlayerPauseImageKey];
+        
+        [self.playButton setImage:[UIImage imageNamed:playImage]
+                         forState:UIControlStateNormal];
+        
+        [self.playButton setImage:[UIImage imageNamed:pauseImage]
+                         forState:UIControlStateSelected];
+    } else {
+        
+        [self.playButton setTitle:@"Play"
+                         forState:UIControlStateNormal];
+        
+        [self.playButton setTitle:@"Pause"
+                         forState:UIControlStateSelected];
+        
+        // shouldn't this happen automatically?
+        [self.playButton setTitleColor:[self tintColor]
+                              forState:UIControlStateNormal];
+    }
+    
+    //init adds target/action, and adds it to superview
+}
+
+// ignores custom images, at least for now
+- (void)setupRemoteUI {
+    
+    DLog(@"Frame: %@", NSStringFromCGRect(self.bounds));
+    
+    self.playButton = [[UIButton alloc] initWithFrame:self.bounds];
+        
+    [self.playButton setTitle:@"Connecting to Audio..."
+                     forState:UIControlStateNormal];
+    
+    [self.playButton setTitle:@"Pause Audio"
+                     forState:UIControlStateSelected];
+    
+    // shouldn't this happen automatically?
+    [self.playButton setTitleColor:[self tintColor]
+                          forState:UIControlStateNormal];
+    
+    self.playButton.backgroundColor = [UIColor lightGrayColor];
+    
+    //init adds target/action, and adds it to superview
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -542,13 +599,18 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
                 // enable playback UI
                 self.playButton.enabled = YES;
                 
+                [self.playButton setTitle:@"Play Audio"
+                                 forState:UIControlStateNormal];
+                
                 // TODO: doesn't seem available with mp3. Try with caf.
                 AVPlayerItem *item = self.remotePlayer.currentItem;
                 
                 if (!CMTIME_IS_INDEFINITE(item.duration)) {
                     
-# warning CMTimeGetSeconds() returns float64, while maximumValue is a float
-                    self.audioScrubber.maximumValue = CMTimeGetSeconds(self.remotePlayer.currentItem.duration);
+                    // NOTE: CMTimeGetSeconds() returns float64, while maximumValue is a float
+                    // Also: duration does not seem to be accurate for remote mp3/caf files
+                    //self.audioScrubber.maximumValue = CMTimeGetSeconds(self.remotePlayer.currentItem.duration);
+                    DLog(@"Duration reported as: %g", CMTimeGetSeconds(self.remotePlayer.currentItem.duration));
                     
                 } else {
                     DLog(@"Duration is still not defined.");
@@ -562,6 +624,9 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
                 
                 // disable playback UI, show notice to user?
                 self.playButton.enabled = NO;
+                
+                [self.playButton setTitle:@"Audio Not Available"
+                                 forState:UIControlStateNormal];
                 
                 break;
             }
@@ -580,7 +645,9 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
              
 - (void)playerItemEnded:(NSNotification *)note {
  
-    // update UI here?
+    // set remotePlayer's current time to 0
+    
+    // update UI here to "Replay"
     DLog(@"Playback completed with note: %@", note);
 }
 

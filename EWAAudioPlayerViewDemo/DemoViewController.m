@@ -103,7 +103,7 @@
         NSLog(@"Failed to locate audio file in bundle");
     }
     
-    self.streamingLabel = [self labelWithText:@"Custom Colors & Streaming"
+    self.streamingLabel = [self labelWithText:@"Playing a Remote Audio File"
                                           atY:self.yForNextView];
     
     // streaming player
