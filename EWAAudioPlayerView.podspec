@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "EWAAudioPlayerView"
-  s.version      = "0.9.0"
+  s.version      = "0.9.1"
   s.summary      = "Customizable audio player user interface for iOS"
 
   s.description  = <<-DESC
@@ -35,9 +35,9 @@ Pod::Spec.new do |s|
   s.author       = { "Matt Blair" => "elsewisemedia@gmail.com" }
 
   s.platform     = :ios
-  s.ios.deployment_target = '6.0'
+  s.ios.deployment_target = '7.0'
 
-  s.source       = { :git => "https://github.com/mattblair/EWAAudioPlayerViewDemo.git", :tag => "0.9.0" }
+  s.source       = { :git => "https://github.com/mattblair/EWAAudioPlayerViewDemo.git", :tag => "0.9.1" }
   s.source_files  = 'EWAAudioPlayerView'
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
