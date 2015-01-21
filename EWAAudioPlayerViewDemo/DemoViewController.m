@@ -49,7 +49,7 @@
     
     self.yForNextView = 40.0;
     
-    self.fontForLabels = [UIFont fontWithName:@"Georgia" size:24.0];
+    self.fontForLabels = [UIFont fontWithName:@"Menlo" size:20.0];
     
     self.basicLabel = [self labelWithText:@"Default"
                                       atY:self.yForNextView];
@@ -64,6 +64,8 @@
         self.basicAudioPlayerView = [[EWAAudioPlayerView alloc] initWithAudioURL:bundleAudioURL
                                                                           images:nil
                                                                              atY:self.yForNextView];
+        //self.basicAudioPlayerView.remoteBackgroundColor = [UIColor cyanColor];
+        self.basicAudioPlayerView.buttonTextColor = [UIColor redColor];
         
         [self.view addSubview:self.basicAudioPlayerView];
         
@@ -104,7 +106,7 @@
     }
     
     
-    self.remoteLabel = [self labelWithText:@"Playing a Remote Audio File"
+    self.remoteLabel = [self labelWithText:@"Playing a Remote Audio File (duration unknown)"
                                        atY:self.yForNextView];
     
     // remote player
@@ -116,7 +118,9 @@
                                                                           atY:self.yForNextView];
     
     self.remoteAudioPlayerView.remoteBackgroundColor = [UIColor blackColor];
-    //self.remoteAudioPlayerView.remoteTintColor = [UIColor redColor];
+    self.remoteAudioPlayerView.buttonTextColor = [UIColor redColor];
+    self.remoteAudioPlayerView.buttonFont = [UIFont fontWithName:@"Menlo-Bold"
+                                                            size:17.0];
     
     [self.view addSubview:self.remoteAudioPlayerView];
     
