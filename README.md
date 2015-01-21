@@ -14,11 +14,12 @@ As of October 2014, it's probably not stable enough for general use. APIs are no
 * Use Auto Layout instead of passing frame for y and width. (I need to update a few apps still depending on code-based frame calculations first...)
 
 #### Refactor
-* There's too much piled into one class at this point. It's obviously much more than a view should handle, but part of the point was to have a single class to add for comprehensive audio management.
+* There's too much piled into one class at this point. It's probably much more than a view should handle, but part of the point was to have a single class to add for comprehensive audio management.
 * Creating distinct subclasses for local v. remote sources might eliminate some conditionals, but much of the behavior might be shared in a superclass. TBD, pending feature stabilization. 
 
-#### Improve Remote UI
-* Add an activity indicator during the connect phase? 
+#### Pending Improvements to Remote UI
+* Add an activity indicator during the connect phase?
+* Split into two buttons while playing: Restart on left, Pause on right.
 * Under what conditions *is* duration available from remote sources? E.g. file formats that have it in the header data, or streaming sources that transmit the duration at the start of playback? How can UI reflect/handle that? 
 * Would it be helpful to have a playback counter, even if total duration is unknown? Or init the view with a duration stored in the data driving the app?
 

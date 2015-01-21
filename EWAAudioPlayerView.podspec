@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "EWAAudioPlayerView"
-  s.version      = "0.9.1"
+  s.version      = "0.9.2"
   s.summary      = "Customizable audio player user interface for iOS"
 
   s.description  = <<-DESC
@@ -24,8 +24,8 @@ Pod::Spec.new do |s|
 
                    * with time scrubber
                    * properties exposed for visual customization
-                   * [summarize readme here]
-                   * Think: Why did you write this? What is the focus? What does it do?
+                   * handles audio in the bundle, and remote audio URLs
+                   * tested mainly with caf and mp3 files so far
                    DESC
 
   s.homepage     = "https://github.com/mattblair/EWAAudioPlayerViewDemo"
@@ -37,21 +37,10 @@ Pod::Spec.new do |s|
   s.platform     = :ios
   s.ios.deployment_target = '7.0'
 
-  s.source       = { :git => "https://github.com/mattblair/EWAAudioPlayerViewDemo.git", :tag => "0.9.1" }
+  s.source       = { :git => "https://github.com/mattblair/EWAAudioPlayerViewDemo.git", :tag => "0.9.2" }
   s.source_files  = 'EWAAudioPlayerView'
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  A list of resources included with the Pod. These are copied into the
-  #  target bundle with a build phase script. Anything else will be cleaned.
-  #  You can preserve files from being cleaned, please don't preserve
-  #  non-essential files like tests, examples and documentation.
-  #
-
-  # s.resource  = "icon.png"
-  # s.resources = "Resources/*.png"
-
-  # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
   s.frameworks = 'AVFoundation'
   s.requires_arc = true
