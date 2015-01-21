@@ -25,11 +25,17 @@ extern NSString* const kEWAAudioPlayerPlayedTrackImageKey;
 // note: setting color removes custom images
 @property (strong, nonatomic) UIColor *playedTrackColor;
 @property (strong, nonatomic) UIColor *unplayedTrackColor;
-@property (strong, nonatomic) UIColor *thumbColor; // has no effect in iOS 7?
+@property (strong, nonatomic) UIColor *thumbColor; // has no effect in iOS 7+
 
-// add notes about setting background color/view
+@property (strong, nonatomic) UIColor *remoteBackgroundColor;
+@property (strong, nonatomic) UIColor *remoteTintColor;
 
+
+// DEPRECATED: kept for now for compatibility. Assumes 320-point width
 - (id)initWithAudioURL:(NSURL *)audioURL images:(NSDictionary *)images atY:(CGFloat)playerY;
+
+// the new designated initializer:
+- (instancetype)initWithAudioURL:(NSURL *)audioURL images:(NSDictionary *)images width:(CGFloat)width atY:(CGFloat)playerY;
 
 - (void)pausePlayback;
 - (void)resumePlayback;

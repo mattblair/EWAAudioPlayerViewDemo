@@ -32,8 +32,8 @@
 @property (strong, nonatomic) UILabel *styledLabel;
 @property (strong, nonatomic) EWAAudioPlayerView *styledAudioPlayerView;
 
-@property (strong, nonatomic) UILabel *streamingLabel;
-@property (strong, nonatomic) EWAAudioPlayerView *streamingAudioPlayerView;
+@property (strong, nonatomic) UILabel *remoteLabel;
+@property (strong, nonatomic) EWAAudioPlayerView *remoteAudioPlayerView;
 
 @end
 
@@ -103,20 +103,24 @@
         NSLog(@"Failed to locate audio file in bundle");
     }
     
-    self.streamingLabel = [self labelWithText:@"Playing a Remote Audio File"
-                                          atY:self.yForNextView];
     
-    // streaming player
+    self.remoteLabel = [self labelWithText:@"Playing a Remote Audio File"
+                                       atY:self.yForNextView];
     
-    NSURL *streamingURL = [NSURL URLWithString:kStreamingAudioURL];
+    // remote player
     
-    self.streamingAudioPlayerView = [[EWAAudioPlayerView alloc] initWithAudioURL:streamingURL
-                                                                          images:nil
-                                                                             atY:self.yForNextView];
+    NSURL *remoteURL = [NSURL URLWithString:kRemoteAudioURL];
     
-    [self.view addSubview:self.streamingAudioPlayerView];
+    self.remoteAudioPlayerView = [[EWAAudioPlayerView alloc] initWithAudioURL:remoteURL
+                                                                       images:nil
+                                                                          atY:self.yForNextView];
     
-    self.yForNextView += self.streamingAudioPlayerView.frame.size.height + VERTICAL_SPACER_EXTRA;
+    self.remoteAudioPlayerView.remoteBackgroundColor = [UIColor blackColor];
+    //self.remoteAudioPlayerView.remoteTintColor = [UIColor redColor];
+    
+    [self.view addSubview:self.remoteAudioPlayerView];
+    
+    self.yForNextView += self.remoteAudioPlayerView.frame.size.height + VERTICAL_SPACER_EXTRA;
 }
 
 // configure the label, add it to the view, and increment y

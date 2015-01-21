@@ -66,6 +66,7 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 // scale this to the length of the clip automatically?
 #define AUDIO_DISPLAY_UPDATE_INTERVAL .25
 
+
 @interface EWAAudioPlayerView ()
 
 @property (strong, nonatomic) NSDictionary *imageNames;
@@ -88,14 +89,21 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 
 @end
 
+
 @implementation EWAAudioPlayerView
+
 
 #pragma mark - View lifecycle
 
-- (id)initWithAudioURL:(NSURL *)audioURL images:(NSDictionary *)images atY:(CGFloat)playerY {
+- (instancetype)initWithAudioURL:(NSURL *)audioURL images:(NSDictionary *)images atY:(CGFloat)playerY {
     
-#warning Magic Numbers!!!
-    CGRect defaultFrame = CGRectMake(0.0, playerY, 320.0, 44.0); // height was 52
+    CGFloat oldSchoolWidth = 320.0; // assumes iPhone < 6
+    return [self initWithAudioURL:audioURL images:images width:oldSchoolWidth atY:playerY];
+}
+
+- (instancetype)initWithAudioURL:(NSURL *)audioURL images:(NSDictionary *)images width:(CGFloat)width atY:(CGFloat)playerY {
+    
+    CGRect defaultFrame = CGRectMake(0.0, playerY, width, 44.0); // height was 52
     
     self = [super initWithFrame:defaultFrame];
     if (self) {
@@ -266,20 +274,6 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
     
     self.playButton = [[UIButton alloc] initWithFrame:buttonFrame];
     
-    // replaced with using text when no custom images are specified
-    /*
-     NSString *playImage = nil;
-     NSString *pauseImage = nil;
-     
-     if (imageNames) {
-     playImage = [imageNames objectForKey:kEWAAudioPlayerPlayImageKey];
-     pauseImage = [imageNames objectForKey:kEWAAudioPlayerPauseImageKey];
-     } else {
-     playImage = PLAY_BUTTON_IMAGE;
-     pauseImage = PAUSE_BUTTON_IMAGE;
-     }
-     */
-    
     self.playButton.imageEdgeInsets = UIEdgeInsetsMake(8.0, 8.0, 8.0, 8.0);
     
     if (self.imageNames) {
@@ -299,13 +293,9 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
         
         [self.playButton setTitle:@"Pause"
                          forState:UIControlStateSelected];
-        
-        // shouldn't this happen automatically?
-        [self.playButton setTitleColor:[self tintColor]
-                              forState:UIControlStateNormal];
     }
     
-    //init adds target/action, and adds it to superview
+    // init adds target/action, and adds playButton to superview
 }
 
 // ignores custom images, at least for now
@@ -315,19 +305,15 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
     
     self.playButton = [[UIButton alloc] initWithFrame:self.bounds];
         
-    [self.playButton setTitle:@"Connecting to Audio..."
+    [self.playButton setTitle:NSLocalizedString(@"Connecting to Audio...", @"Test for connecting to remoteaudio button.")
                      forState:UIControlStateNormal];
     
-    [self.playButton setTitle:@"Pause Audio"
+    [self.playButton setTitle:NSLocalizedString(@"Pause", @"Text for remote pause button.")
                      forState:UIControlStateSelected];
-    
-    // shouldn't this happen automatically?
-    [self.playButton setTitleColor:[self tintColor]
-                          forState:UIControlStateNormal];
     
     self.playButton.backgroundColor = [UIColor lightGrayColor];
     
-    //init adds target/action, and adds it to superview
+    // init adds target/action, and adds playButton to superview
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -441,6 +427,23 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 }
 
 
+#pragma mark - Styling of Remote Player
+
+- (void)setRemoteBackgroundColor:(UIColor *)remoteBackgroundColor {
+    
+    _remoteBackgroundColor = remoteBackgroundColor;
+    self.playButton.backgroundColor = remoteBackgroundColor;
+}
+
+- (void)setRemoteTintColor:(UIColor *)remoteTintColor {
+    _remoteTintColor = remoteTintColor;
+    self.playButton.tintColor = remoteTintColor;
+    
+    [self.playButton setTitleColor:remoteTintColor
+                          forState:UIControlStateNormal];
+}
+
+
 #pragma mark - Internal Handling of Playback
 
 - (void)playAudio {
@@ -506,7 +509,7 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
         self.audioPlayer.currentTime = self.audioScrubber.value;
     } else {
         
-        DLog(@"WARNING: scrubbing not implemented for streaming audio.");
+        DLog(@"WARNING: scrubbing not implemented for remote audio.");
     }
     
     [self updateCurrentTimeDisplay];
@@ -583,7 +586,7 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 }
 
 
-#pragma mark - React to AVPlayer (Streaming) Status
+#pragma mark - React to AVPlayer (Remote) Status
 
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     
@@ -596,10 +599,11 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
             case AVPlayerStatusReadyToPlay: {
                 DLog(@"Ready");
                 
-                // enable playback UI
                 self.playButton.enabled = YES;
                 
-                [self.playButton setTitle:@"Play Audio"
+                // include audio in the name so they know what they are playing.
+                // e.g. not video
+                [self.playButton setTitle:NSLocalizedString(@"Play Audio", @"Text for remote audio play button.")
                                  forState:UIControlStateNormal];
                 
                 // TODO: doesn't seem available with mp3. Try with caf.
@@ -625,7 +629,7 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
                 // disable playback UI, show notice to user?
                 self.playButton.enabled = NO;
                 
-                [self.playButton setTitle:@"Audio Not Available"
+                [self.playButton setTitle:NSLocalizedString(@"Audio Not Available", @"Text for remote audio not available.")
                                  forState:UIControlStateNormal];
                 
                 break;
