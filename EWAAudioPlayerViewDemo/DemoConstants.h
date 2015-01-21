@@ -9,7 +9,7 @@
 
 // Audio file
 extern NSString* const kDemoAudioFile;
-extern NSString* const kStreamingAudioURL;
+extern NSString* const kRemoteAudioURL;
 
 // Player graphics
 extern NSString* const kPlayButtonImage;

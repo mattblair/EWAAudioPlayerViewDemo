@@ -11,7 +11,7 @@
 
 // Audio file
 NSString* const kDemoAudioFile = @"jd-duniway";
-NSString* const kStreamingAudioURL = @"https://s3-us-west-2.amazonaws.com/pdxshg.media/audio/jd-duniway.mp3";
+NSString* const kRemoteAudioURL = @"https://s3-us-west-2.amazonaws.com/pdxshg.media/audio/jd-duniway.mp3";
 
 // Audio Player Images
 NSString* const kPlayButtonImage = @"kbb-play";
