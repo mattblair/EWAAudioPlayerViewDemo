@@ -28,7 +28,8 @@ extern NSString* const kEWAAudioPlayerPlayedTrackImageKey;
 @property (strong, nonatomic) UIColor *thumbColor; // has no effect in iOS 7+
 
 @property (strong, nonatomic) UIColor *remoteBackgroundColor;
-@property (strong, nonatomic) UIColor *remoteTintColor;
+@property (strong, nonatomic) UIColor *buttonTextColor;
+@property (strong, nonatomic) UIFont *buttonFont;
 
 
 // DEPRECATED: kept for now for compatibility. Assumes 320-point width

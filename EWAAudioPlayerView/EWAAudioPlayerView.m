@@ -431,16 +431,35 @@ NSString* const kEWAAudioPlayerPlayedTrackImageKey = @"kEWAAudioPlayerPlayedTrac
 
 - (void)setRemoteBackgroundColor:(UIColor *)remoteBackgroundColor {
     
-    _remoteBackgroundColor = remoteBackgroundColor;
-    self.playButton.backgroundColor = remoteBackgroundColor;
+    if (remoteBackgroundColor) {
+        _remoteBackgroundColor = remoteBackgroundColor;
+        self.playButton.backgroundColor = remoteBackgroundColor;
+    } else {
+        DLog(@"Background color can't be set to nil.");
+    }
 }
 
-- (void)setRemoteTintColor:(UIColor *)remoteTintColor {
-    _remoteTintColor = remoteTintColor;
-    self.playButton.tintColor = remoteTintColor;
+- (void)setButtonTextColor:(UIColor *)buttonTextColor {
     
-    [self.playButton setTitleColor:remoteTintColor
-                          forState:UIControlStateNormal];
+    if (buttonTextColor) {
+        _buttonTextColor = buttonTextColor;
+        
+        [self.playButton setTitleColor:buttonTextColor
+                              forState:UIControlStateNormal];
+    } else {
+        DLog(@"Background color can't be set to nil.");
+    }
+}
+
+- (void)setButtonFont:(UIFont *)buttonFont {
+    
+    if (buttonFont) {
+        _buttonFont = buttonFont;
+        
+        self.playButton.titleLabel.font = buttonFont;
+    } else {
+        DLog(@"Background color can't be set to nil.");
+    }
 }
 
 
