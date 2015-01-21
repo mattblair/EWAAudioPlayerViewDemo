@@ -8,15 +8,8 @@
 
 Pod::Spec.new do |s|
 
-  # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  These will help people to find your library, and whilst it
-  #  can feel like a chore to fill in it's definitely to your advantage. The
-  #  summary should be tweet-length, and the description more in depth.
-  #
-
   s.name         = "EWAAudioPlayerView"
-  s.version      = "0.9.2"
+  s.version      = "0.9.3"
   s.summary      = "Customizable audio player user interface for iOS"
 
   s.description  = <<-DESC
@@ -31,13 +24,13 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/mattblair/EWAAudioPlayerViewDemo"
   # s.screenshots  = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
 
-  s.license      = { :type => 'MIT', :file => 'FILE_LICENSE' }
+  s.license      = { :type => 'MIT' }
   s.author       = { "Matt Blair" => "elsewisemedia@gmail.com" }
 
   s.platform     = :ios
   s.ios.deployment_target = '7.0'
 
-  s.source       = { :git => "https://github.com/mattblair/EWAAudioPlayerViewDemo.git", :tag => "0.9.2" }
+  s.source       = { :git => "https://github.com/mattblair/EWAAudioPlayerViewDemo.git", :tag => "0.9.3" }
   s.source_files  = 'EWAAudioPlayerView'
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
